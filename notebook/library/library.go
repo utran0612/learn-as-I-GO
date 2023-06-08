@@ -37,7 +37,7 @@ type Member struct{
  
 type Library struct {
 	books map[string]Book
-	members map[Member][]string
+	members map[string][]Member
 }
 
 type LendHistory struct {
@@ -45,7 +45,7 @@ type LendHistory struct {
 	checkinTime time.Time
 }
 
-func checkout(library *Library, bookTitle string,borrower Member){
+func checkout(library *Library, bookTitle string,borrower string){
 	book, isFound := library.books[bookTitle]
 	if isFound && library.books[bookTitle].quantity >= 1 {
 		//udate book checkout time and quantity
@@ -54,7 +54,7 @@ func checkout(library *Library, bookTitle string,borrower Member){
 
 		//update library 
 		library.books[bookTitle] = book
-		library.members[borrower] = append(library.members[borrower], bookTitle)
+		library.members[borrower] = append(library.members[borrower], []Member{})
 		fmt.Println(library)
 		
 		fmt.Println("Checkout",bookTitle,"successfully for",borrower)
