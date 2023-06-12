@@ -35,11 +35,16 @@ func ParseTime(stringTime string) (Time, error){
 		second := timeComponents[2]
 
 		intHour, e1:= strconv.Atoi(hour)
+		if e1 != nil {
+			return Time{},fmt.Errorf("invalid hour component")
+		}
 		intMinute, e2 := strconv.Atoi(minute)
+		if e2 != nil {
+			return Time{},fmt.Errorf("invalid minute component")
+		}
 		intSecond, e3 := strconv.Atoi(second)
-		if (e1 != nil && e2 != nil && e3 != nil){
-			fmt.Print(errors.New("cannot parse string to time"))
-			return Time{},fmt.Errorf("invalid time components")
+		if (e3 != nil){
+			return Time{},fmt.Errorf("invalid second components")
 		}else{
 			time := Time{intHour,intMinute,intSecond}
 			return time,nil
@@ -51,6 +56,6 @@ func ParseTime(stringTime string) (Time, error){
 }
 
 func main() {
-	st := "12:4:5"
+	st := "whoops"
 	ParseTime(st)
 }
