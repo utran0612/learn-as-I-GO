@@ -27,7 +27,7 @@ type Time struct {
 	hour, minute, second int
 }
 
-func ParseTime(stringTime string) bool{
+func ParseTime(stringTime string) (Time, error){
 	timeComponents := strings.Split(stringTime,":")
 	if len(timeComponents) == 3{
 		hour := timeComponents[0]
@@ -39,15 +39,14 @@ func ParseTime(stringTime string) bool{
 		intSecond, e3 := strconv.Atoi(second)
 		if (e1 != nil && e2 != nil && e3 != nil){
 			fmt.Print(errors.New("cannot parse string to time"))
-			return false
+			return Time{},fmt.Errorf("invalid time components")
 		}else{
 			time := Time{intHour,intMinute,intSecond}
-			fmt.Printf("Time is %v %v %v",time.hour,time.minute,time.second) 
-			return true 
+			return time,nil
 		}	
 	}else{
 		fmt.Print(errors.New("cannot parse string to time"))
-		return false
+		return Time{},fmt.Errorf("invalid number of time components")
 	}
 }
 

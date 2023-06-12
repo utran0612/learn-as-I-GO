@@ -22,12 +22,11 @@ func TestErrors (t *testing.T){
 	}
 
 	for _, time := range table {
-		if time.ok && ParseTime(time.time){
+		_, err := ParseTime(time.time)
+		if time.ok && err != nil{
 			fmt.Print("Pass")
 		}else{
 			fmt.Println("Doesn't pass")
 		}
 	}
-
-
 }
